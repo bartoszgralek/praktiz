@@ -14,10 +14,7 @@ import com.google.api.services.docs.v1.Docs;
 import com.google.api.services.docs.v1.DocsScopes;
 import org.springframework.stereotype.Component;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +23,7 @@ import java.util.List;
 public class DocsAuth {
     private static final String APPLICATION_NAME = "Praktiz";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "/tokens";
+    private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
     /**
      * Global instance of the scopes required by this quickstart.
