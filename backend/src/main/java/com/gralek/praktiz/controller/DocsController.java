@@ -1,5 +1,6 @@
 package com.gralek.praktiz.controller;
 
+import com.gralek.praktiz.payload.response.MessageResponse;
 import com.gralek.praktiz.service.DocsService;
 import org.mortbay.jetty.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class DocsController {
     public ResponseEntity<?> updateDatabaseWithDoc() {
         try {
             docsService.updateDatabase();
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(new MessageResponse("Figure base updated"));
         } catch (GeneralSecurityException | IOException | SQLException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.ORDINAL_500_Internal_Server_Error).build();

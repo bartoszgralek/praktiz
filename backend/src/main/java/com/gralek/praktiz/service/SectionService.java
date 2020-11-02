@@ -39,6 +39,9 @@ public class SectionService {
 
     public Section getRandomFigures(String sectionName, int numberOfFigures) {
         Section section = getSectionByName(sectionName);
+
+        if(numberOfFigures >= section.getFigures().size()) return section;
+
         section.setFigures(selectKItems(section.getFigures(), numberOfFigures));
         return section;
     }
