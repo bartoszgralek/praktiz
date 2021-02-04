@@ -7,5 +7,5 @@ import java.util.Set;
 
 public interface FigureRepository extends JpaRepository<Figure, Long> {
 
-    Set<Figure> findFiguresByParent(Figure parent);
+    Set<Figure> findFiguresBySectionName(String name);
 }

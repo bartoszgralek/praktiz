@@ -22,7 +22,7 @@ public class Section {
     @Column(length = 20, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Figure> figures = new ArrayList<>();
 
     public Section(String name) {
