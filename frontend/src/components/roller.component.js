@@ -1,43 +1,45 @@
 import React, {useEffect, useState} from "react";
-import {SectionChooser} from "./section-chooser.component";
-import {Button} from "react-bootstrap";
-import html2canvas from "html2canvas";
-import {List} from "./list.component";
+import {Button, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
+import useAxios from "axios-hooks";
+import AddIcon from '@material-ui/icons/Add';
+import SectionSelect from "./select_section.component";
 
-export const Roller = props => {
+export default function Roller() {
 
-    const [lists, setLists] = useState([]);
+    const [{ data, loading, error }, refetch] = useAxios(
+        '/api/section/names'
+    )
 
-    function createList(section, limit) {
+    const [selections, setSelections] = useState([])
 
-        const list = <List section={section} limit={limit} ref={section}/>
-        setLists([...lists, list])
+    useEffect(() => {
+            if (!loading) setSelections([...selections, <SectionSelect names={data} set={addToMap} del={removeFromMap} key={selections.length + 1}/>])
+        }
+    ,[data])
+
+    const [map, setMap] = useState(new Map())
+
+    function addToMap(section, number) {
+        map.set(section, number)
+        setMap(map)
+        console.log(map)
     }
 
-    function capture() {
-        html2canvas(document.querySelector("#capture")).then(canvas => {
-            window.document.write('<img src="'+canvas.toDataURL("image/png")+'"/>');
-        });
+    function removeFromMap(object, key) {
+        setSelections(selections.filter(el => el !== object))
+        map.delete(key)
+        setMap(map)
     }
 
-    function downloadInnerHtml(filename, elId, mimeType) {
-        var elHtml = document.getElementById(elId).innerHTML;
-        var link = document.createElement('a');
-        mimeType = mimeType || 'text/plain';
-
-        link.setAttribute('download', filename);
-        link.setAttribute('href', 'data:' + mimeType  +  ';charset=iso-8859-1,' + encodeURIComponent(elHtml));
-        link.click();
-    }
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>Error!</p>
 
     return (
         <div>
-            <SectionChooser createList={(section, limit) => createList(section, limit)}/>
-            <div id="capture">
-                {lists}
-            </div>
-            <Button onClick={() => downloadInnerHtml("figures.html", 'capture', 'text/html')}>Capture!</Button>
-            {/*<Button onClick={() => capture()}>Capture!</Button>*/}
+            {selections}
+            <Button onClick={() => setSelections([...selections, <SectionSelect names={data} set={addToMap} del={removeFromMap} key={selections.length + 1}/>])}>
+                <AddIcon/>
+            </Button>
         </div>
     )
 }

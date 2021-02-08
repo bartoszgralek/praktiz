@@ -41,6 +41,11 @@ public class SectionController {
         }
     }
 
+    @GetMapping("/names")
+    public ResponseEntity<?> getSectionNames() {
+        return ResponseEntity.ok(sectionService.getSectionNames());
+    }
+
     @PostMapping("/{sectionName}")
     public ResponseEntity<?> createSection(@PathVariable String sectionName) {
         if(sectionRepository.existsByName(sectionName))

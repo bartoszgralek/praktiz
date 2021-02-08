@@ -4,14 +4,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+axios.defaults.headers = {"Content-type": "application/json"}
 
 ReactDOM.render(
-  <React.StrictMode>
-      <BrowserRouter>
-          <App/>
-      </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+      <App/>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
@@ -19,3 +20,5 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+

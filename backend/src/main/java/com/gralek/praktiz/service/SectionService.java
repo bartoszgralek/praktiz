@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class SectionService {
@@ -23,6 +24,9 @@ public class SectionService {
         return sectionRepository.findAll();
     }
 
+    public List<String> getSectionNames() {
+        return getAllSections().stream().map(Section::getName).collect(Collectors.toList());
+    }
 
     public Section getRandomFigures(String sectionName, int numberOfFigures) {
         Section section = getSectionByName(sectionName);
