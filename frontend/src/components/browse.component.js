@@ -1,5 +1,7 @@
 import React from "react";
+import SectionList from "./section-list.component";
 import useAxios from "axios-hooks";
+
 
 export default function Browse() {
 
@@ -12,20 +14,7 @@ export default function Browse() {
 
     return (
         <div>
-            <ul>
-                {data.map((section, index) => (
-                    <li key={index.toString()}>
-                        {section.name}
-                        <ul>
-                        {section.figures.map((figure, index) =>
-                            <li key={index.toString()} >
-                                {figure.description}
-                            </li>
-                        )}
-                        </ul>
-                    </li>
-                ))}
-            </ul>
+            <SectionList sections={data}/>
         </div>
     )
 }
