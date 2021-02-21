@@ -21,20 +21,6 @@ export default function Roller() {
         }
     ,[data])
 
-    useEffect(() => {
-        map.forEach((value, key) =>  {
-            axios.get(`/api/section/${key}`, {
-                params: {
-                    limit: value
-                }
-            }).then(response =>
-            {
-                let section = sections.filter(el => el.name === response.data.name)
-                setSections([...sections, response.data])
-            })
-        })
-    }, [map])
-
     function addToMap(section, number) {
         setMap(new Map(map.set(section, number)))
     }
@@ -50,6 +36,21 @@ export default function Roller() {
             <SectionSelect names={data} set={addToMap} del={removeFromMap} key={selections.length + 1}/>])
     }
 
+    async function fetchSections() {
+        const resultList = [];
+        const sectionArray = Array.from(map, ([section, limit]) => ({section, limit}));
+
+        await Promise.all(sectionArray.map(item =>
+            axios
+                .get(`/api/section/${item.section}`, { params: {limit: item.limit}})
+                .then(response => {
+                    resultList.push(response.data)
+                })
+        ))
+
+
+        setSections(resultList)
+    }
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error!</p>
@@ -60,8 +61,8 @@ export default function Roller() {
             <Button onClick={createNewSelection}>
                 <AddIcon/>
             </Button>
-            {/*<Button variant="contained" disabled={map.size < 1} onClick={createSectionList}>Roll!</Button>*/}
-            {sections.length > 0 && <SectionList sections={sections} />}
+            <Button variant="contained" disabled={map.size < 1} onClick={fetchSections}>Roll!</Button>
+            {sections && <SectionList sections={sections}/>}
         </div>
     )
 }
