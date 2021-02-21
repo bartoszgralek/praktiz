@@ -17,7 +17,7 @@ public class SectionService {
     private SectionRepository sectionRepository;
 
     public Section getSectionByName(String name) {
-        return sectionRepository.findByName(name).orElseThrow(() -> new RuntimeException("Section not found"));
+        return sectionRepository.findByName(name).orElseThrow(() -> new RuntimeException(String.format("Section %s not found", name)));
     }
 
     public List<Section> getAllSections() {

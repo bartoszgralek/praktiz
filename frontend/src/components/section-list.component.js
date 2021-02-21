@@ -1,4 +1,5 @@
 import React from "react";
+import RemoveIcon from "@material-ui/icons/Remove";
 
 export default function SectionList(props) {
 
@@ -10,7 +11,7 @@ export default function SectionList(props) {
                         {section.name}
                         <ul>
                         {section.figures.map((figure, index) =>
-                            <li key={index.toString()} >
+                            <li style={{whiteSpace: "pre-wrap"}} key={index.toString()} >
                                 {figure.description}
                             </li>
                         )}

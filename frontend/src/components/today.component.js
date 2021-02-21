@@ -1,13 +1,12 @@
 import React from "react";
 import SectionList from "./section-list.component";
 import useAxios from "axios-hooks";
-import AddForm from "./addform.component";
 
 
-export default function Browse() {
+export default function Today() {
 
     const [{ data, loading, error }, refetch] = useAxios(
-        '/api/section'
+        '/api/today'
     )
 
     if (loading) return <p>Loading...</p>
@@ -16,7 +15,6 @@ export default function Browse() {
     return (
         <div>
             <SectionList sections={data}/>
-            <AddForm/>
         </div>
     )
 }
