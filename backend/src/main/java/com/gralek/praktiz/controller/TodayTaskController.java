@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/today")
-public class DayController {
+public class TodayTaskController {
 
     private final DayService dayService;
 
-    public DayController(DayService dayService) {
+    public TodayTaskController(DayService dayService) {
         this.dayService = dayService;
     }
 
     @GetMapping
-    public ResponseEntity<?> getTodaySections() {
-        return ResponseEntity.ok(dayService.getTodaySections());
+    public ResponseEntity<?> getTodayTask() {
+        return ResponseEntity.ok(dayService.getTodayTask());
     }
 }

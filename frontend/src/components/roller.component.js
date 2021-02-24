@@ -44,7 +44,7 @@ export default function Roller() {
             axios
                 .get(`/api/section/${item.section}`, { params: {limit: item.limit}})
                 .then(response => {
-                    resultList.push(response.data)
+                    resultList.push({name: item.section, figures: response.data})
                 })
         ))
 

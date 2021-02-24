@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter} from "react-router-dom";
+import {HashRouter} from "react-router-dom";
 import axios from "axios";
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.defaults.headers = {"Content-type": "application/json"}
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
       <App/>
-  </BrowserRouter>,
+  </HashRouter >,
   document.getElementById('root')
 );
 

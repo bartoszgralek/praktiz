@@ -1,5 +1,6 @@
 package com.gralek.praktiz.service;
 
+import com.gralek.praktiz.model.Figure;
 import com.gralek.praktiz.model.Section;
 import com.gralek.praktiz.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,12 @@ public class SectionService {
         return getAllSections().stream().map(Section::getName).collect(Collectors.toList());
     }
 
-    public Section getRandomFigures(String sectionName, int numberOfFigures) {
+    public List<Figure> getRandomFigures(String sectionName, int numberOfFigures) {
         Section section = getSectionByName(sectionName);
 
-        if(numberOfFigures >= section.getFigures().size()) return section;
+        if(numberOfFigures >= section.getFigures().size()) return section.getFigures();
 
-        section.setFigures(selectKItems(section.getFigures(), numberOfFigures));
-        return section;
+        return selectKItems(section.getFigures(), numberOfFigures);
     }
 
     static <T> List<T> selectKItems(List<T> input, int k)
