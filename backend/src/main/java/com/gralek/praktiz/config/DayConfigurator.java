@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Component
 public class DayConfigurator {
@@ -22,8 +25,9 @@ public class DayConfigurator {
     }
 
     @PostConstruct
-    void init() throws IOException {
-        String json = Files.readString(Path.of("backend\\schedule_config.json"));
+    void init() throws IOException, URISyntaxException {
+        URL res = DayConfigurator.class.getClassLoader().getResource("schedule_config.json");
+        String json = Files.readString(Paths.get(res.toURI()));
         daySections = mapper.readValue(json, DaySection[][].class);
     }
 }

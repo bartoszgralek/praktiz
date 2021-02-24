@@ -60,8 +60,8 @@ public class SectionController {
     public ResponseEntity<?> createFigureInSection(@PathVariable String sectionName, @RequestBody Figure figure) {
         var section = sectionService.getSectionByName(sectionName);
         figure.setSection(section);
-        figureRepository.save(figure);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        var savedFigure = figureRepository.save(figure);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedFigure.getId());
     }
 
     @DeleteMapping("/{sectionName}/figure/{figureId}")

@@ -4,9 +4,7 @@ import useAxios from "axios-hooks";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
 
-export default function AddForm() {
-
-    const history = useHistory()
+export default function AddForm(props) {
 
     const [{ data, loading, error }, refetch] = useAxios(
         '/api/section/names'
@@ -17,7 +15,7 @@ export default function AddForm() {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         axios.post(`/api/section/${section}/figure`,{ description: figure })
-            .then(() => console.log("k"))
+            .then(response => props.onAdd(section, { id: response.data, description: figure }))
     }
 
     if (loading) return <p>Loading...</p>
