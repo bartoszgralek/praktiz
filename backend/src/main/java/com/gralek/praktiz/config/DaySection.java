@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class DaySection {
-    String section;
-    Integer limit;
+
+    private String section;
+    private Integer limit;
+
 }

@@ -41,7 +41,24 @@
       "limit": 1
     }
   ],
-  [],
+  [
+    {
+      "section": "kizomba",
+      "limit": 1
+    },
+    {
+      "section": "semba",
+      "limit": 1
+    },
+    {
+      "section": "semba_tricks",
+      "limit": 1
+    },
+    {
+      "section": "footworks",
+      "limit": 1
+    }
+  ],
   [
     {
       "section": "kizomba",
