@@ -1,12 +1,11 @@
 package com.gralek.praktiz.controller;
 
-import com.gralek.praktiz.model.Figure;
 import com.gralek.praktiz.model.Section;
 import com.gralek.praktiz.payload.response.MessageResponse;
 import com.gralek.praktiz.repository.FigureRepository;
 import com.gralek.praktiz.repository.SectionRepository;
+import com.gralek.praktiz.service.FigureService;
 import com.gralek.praktiz.service.SectionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +14,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/section")
 public class SectionController {
 
-    @Autowired
-    private SectionRepository sectionRepository;
+    private final SectionRepository sectionRepository;
 
-    @Autowired
-    private FigureRepository figureRepository;
+    private final FigureRepository figureRepository;
 
-    @Autowired
-    private SectionService sectionService;
+    private final SectionService sectionService;
+
+    private final FigureService figureService;
+
+    public SectionController(SectionRepository sectionRepository, FigureRepository figureRepository, SectionService sectionService, FigureService figureService) {
+        this.sectionRepository = sectionRepository;
+        this.figureRepository = figureRepository;
+        this.sectionService = sectionService;
+        this.figureService = figureService;
+    }
 
     @GetMapping
     public ResponseEntity<?> getAllSections() {
@@ -54,20 +59,6 @@ public class SectionController {
             sectionRepository.save(new Section(sectionName));
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
-    }
-
-    @PostMapping("/{sectionName}/figure")
-    public ResponseEntity<?> createFigureInSection(@PathVariable String sectionName, @RequestBody Figure figure) {
-        var section = sectionService.getSectionByName(sectionName);
-        figure.setSection(section);
-        var savedFigure = figureRepository.save(figure);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedFigure.getId());
-    }
-
-    @DeleteMapping("/{sectionName}/figure/{figureId}")
-    public ResponseEntity<?> deleteFigureFromSection(@PathVariable String sectionName, @PathVariable Long figureId) {
-        figureRepository.deleteById(figureId);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

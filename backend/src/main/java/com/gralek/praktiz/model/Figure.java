@@ -26,4 +26,6 @@ public class Figure {
     @ManyToOne
     @JoinColumn(name = "section_id")
     private Section section;
+
+    private boolean favourite;
 }

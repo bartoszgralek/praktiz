@@ -3,7 +3,6 @@ package com.gralek.praktiz.service;
 import com.gralek.praktiz.model.Figure;
 import com.gralek.praktiz.model.Section;
 import com.gralek.praktiz.repository.SectionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,8 +13,11 @@ import java.util.stream.Collectors;
 @Service
 public class SectionService {
 
-    @Autowired
-    private SectionRepository sectionRepository;
+    private final SectionRepository sectionRepository;
+
+    public SectionService(SectionRepository sectionRepository) {
+        this.sectionRepository = sectionRepository;
+    }
 
     public Section getSectionByName(String name) {
         return sectionRepository.findByName(name).orElseThrow(() -> new RuntimeException(String.format("Section %s not found", name)));
